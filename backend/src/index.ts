@@ -29,14 +29,14 @@ app.get('/instagram/:handle', async (req: Request, res: Response) => {
     // const postInformationUrl = `https://www.instagram.com/p/${postId}/?__a=1`
     // const postInformation = await axios.get(postInformationUrl);
 
-    const postInformation = mockPostResponse.graphql.shortcode_media;
+    const postInformation = mockPostResponse.graphql.shortcode_media as any;
     const postType = postInformation.__typename;
 
-    const posts = (postType === "GraphSidecar") ? postInformation.edge_sidecar_to_children.edges.map(item => {
+    const posts = (postType === "GraphSidecar") ? postInformation.edge_sidecar_to_children.edges.map((item: any) => {
         return {
             displayUrl: item.node.display_url,
             type: item.node.__typename
-        }
+        } 
     }) : postInformation.display_url;
 
 
