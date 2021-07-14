@@ -13,8 +13,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
-// const axios = require('axios');
-const node_fetch_1 = __importDefault(require("node-fetch"));
+// import axios from 'axios'
+const mavrckMock_json_1 = __importDefault(require("./mock-data/mavrck/mavrckMock.json"));
+const mockPost_json_1 = __importDefault(require("./mock-data/mavrck/mockPost.json"));
 const app = express_1.default();
 const port = 8080;
 app.use(function (req, res, next) {
@@ -24,10 +25,34 @@ app.use(function (req, res, next) {
 });
 app.get('/instagram/:handle', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { handle } = req.params;
-    const url = `https://www.instagram.com/${handle}/?__a=1`;
-    const response = yield node_fetch_1.default(url).then(res => res.json());
-    // console.log(response.data);
-    res.send(`'Hello World!' ${response}`);
+    console.log(`"handle: ${handle}"`);
+    // const instagramInformationUrl = `https://www.instagram.com/${handle}/?__a=1`
+    // const instagramInformation = await axios.get(instagramInfo);
+    const instagramInformation = mavrckMock_json_1.default.graphql.user;
+    const postId = instagramInformation.edge_owner_to_timeline_media.edges[0].node.shortcode;
+    console.log(`"postId: ${postId}"`);
+    // const postInformationUrl = `https://www.instagram.com/p/${postId}/?__a=1`
+    // const postInformation = await axios.get(postInformationUrl);
+    const postInformation = mockPost_json_1.default.graphql.shortcode_media;
+    const postType = postInformation.__typename;
+    const posts = (postType === "GraphSidecar") ? postInformation.edge_sidecar_to_children.edges.map(item => {
+        return {
+            displayUrl: item.node.display_url,
+            type: item.node.__typename
+        };
+    }) : postInformation.display_url;
+    const userInformation = {
+        profilePicture: instagramInformation.profile_pic_url_hd,
+        biography: instagramInformation.biography,
+        fullName: instagramInformation.full_name,
+        followCount: instagramInformation.edge_followed_by.count,
+        likeCount: instagramInformation.edge_owner_to_timeline_media.edges[0].node.edge_liked_by,
+        commentCount: postInformation.edge_media_to_parent_comment.count,
+        latestPostCaption: postInformation.edge_media_to_caption.edges[0].node,
+        postType: postType,
+        allPosts: posts
+    };
+    res.send(userInformation);
 }));
 app.listen(port, () => {
     console.log(`server started at http://localhost:${port}`);
