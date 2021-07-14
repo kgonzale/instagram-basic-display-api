@@ -1,5 +1,7 @@
 import express, { Request, Response, NextFunction } from 'express';
-// import axios from 'axios'
+import axios from 'axios'
+import { populateProxyList } from './proxies/proxies';
+const httpsProxyAgent = require("https-proxy-agent");
 
 import mockInstagramResponse from './mock-data/mavrck/mavrckMock.json'
 import mockPostResponse from './mock-data/mavrck/mockPost.json'
@@ -26,8 +28,18 @@ app.get('/instagram/:handle', async (req: Request, res: Response) => {
     
     const postId: string = instagramInformation.edge_owner_to_timeline_media.edges[0].node.shortcode;
     console.log(`"postId: ${postId}"`)
-    // const postInformationUrl = `https://www.instagram.com/p/${postId}/?__a=1`
-    // const postInformation = await axios.get(postInformationUrl);
+    const postInformationUrl = `https://www.instagram.com/p/${postId}/?__a=1`
+
+    const proxyList = await populateProxyList();
+    const proxy = proxyList[Math.floor(Math.random()) * proxyList.length];
+
+    const agent = new httpsProxyAgent(proxy);
+
+    const postInformationData = await axios.get(postInformationUrl, {
+        httpsAgent: agent
+    });
+
+    console.log(postInformationData.data);
 
     const postInformation = mockPostResponse.graphql.shortcode_media as any;
     const postType = postInformation.__typename;
@@ -52,7 +64,7 @@ app.get('/instagram/:handle', async (req: Request, res: Response) => {
         allPosts: posts
     }
 
-    res.send(userInformation);
+    res.send(postInformationData.data);
 })
 
 app.listen(port, () => {

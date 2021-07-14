@@ -13,7 +13,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
-// import axios from 'axios'
+const axios_1 = __importDefault(require("axios"));
+const proxies_1 = require("./proxies/proxies");
+const httpsProxyAgent = require("https-proxy-agent");
 const mavrckMock_json_1 = __importDefault(require("./mock-data/mavrck/mavrckMock.json"));
 const mockPost_json_1 = __importDefault(require("./mock-data/mavrck/mockPost.json"));
 const app = express_1.default();
@@ -31,8 +33,14 @@ app.get('/instagram/:handle', (req, res) => __awaiter(void 0, void 0, void 0, fu
     const instagramInformation = mavrckMock_json_1.default.graphql.user;
     const postId = instagramInformation.edge_owner_to_timeline_media.edges[0].node.shortcode;
     console.log(`"postId: ${postId}"`);
-    // const postInformationUrl = `https://www.instagram.com/p/${postId}/?__a=1`
-    // const postInformation = await axios.get(postInformationUrl);
+    const postInformationUrl = `https://www.instagram.com/p/${postId}/?__a=1`;
+    const proxyList = yield proxies_1.populateProxyList();
+    const proxy = proxyList[Math.floor(Math.random()) * proxyList.length];
+    const agent = new httpsProxyAgent(proxy);
+    const postInformationData = yield axios_1.default.get(postInformationUrl, {
+        httpsAgent: agent
+    });
+    console.log(postInformationData.data);
     const postInformation = mockPost_json_1.default.graphql.shortcode_media;
     const postType = postInformation.__typename;
     const posts = (postType === "GraphSidecar") ? postInformation.edge_sidecar_to_children.edges.map((item) => {
@@ -52,7 +60,7 @@ app.get('/instagram/:handle', (req, res) => __awaiter(void 0, void 0, void 0, fu
         postType: postType,
         allPosts: posts
     };
-    res.send(userInformation);
+    res.send(postInformationData.data);
 }));
 app.listen(port, () => {
     console.log(`server started at http://localhost:${port}`);
