@@ -1,10 +1,8 @@
+import axios from 'axios';
 import express, { Request, Response, NextFunction } from 'express';
-// import axios from 'axios'
 
-import mockInstagramResponse from './mock-data/mavrck/mavrckMock.json'
-import mockPostResponse from './mock-data/mavrck/mockPost.json'
-
-
+import mockInstagramResponse from './mock-data/addison/addisonMock.json'
+import mockPostResponse from './mock-data/addison/mockPost.json'
 
 const app = express();
 const port = 8080;
@@ -14,6 +12,8 @@ app.use(function (req: Request, res: Response, next: NextFunction) {
     res.setHeader('Access-Control-Allow-Methods', 'GET');
     next();
 });
+
+app.use(express.json())
 
 app.get('/instagram/:handle', async (req: Request, res: Response) => {
     const { handle } = req.params;
@@ -29,16 +29,15 @@ app.get('/instagram/:handle', async (req: Request, res: Response) => {
     // const postInformationUrl = `https://www.instagram.com/p/${postId}/?__a=1`
     // const postInformation = await axios.get(postInformationUrl);
 
-    const postInformation = mockPostResponse.graphql.shortcode_media as any;
+    const postInformation = mockPostResponse.graphql.shortcode_media;
     const postType = postInformation.__typename;
 
-    const posts = (postType === "GraphSidecar") ? postInformation.edge_sidecar_to_children.edges.map((item: any) => {
+    const posts = (postType === "GraphSidecar") ? postInformation.edge_sidecar_to_children.edges.map(item => {
         return {
             displayUrl: item.node.display_url,
             type: item.node.__typename
         } 
     }) : postInformation.display_url;
-
 
     const userInformation = {
         profilePicture: instagramInformation.profile_pic_url_hd,
@@ -53,6 +52,26 @@ app.get('/instagram/:handle', async (req: Request, res: Response) => {
     }
 
     res.send(userInformation);
+})
+
+
+
+app.post('/discord', async (req: Request, res: Response) => {
+    const { body } = req;  
+    const embeds = [body]
+
+    const url = "https://discord.com/api/webhooks/865014862789738507/9zLyGEy6irx8_84gg2RuP84LlifN7yHF9TbDfh6eykz5zWzJDb2nwfriMa7h3tCVUrWZ"  
+
+    try { 
+        const response = await axios.post(url, { 
+             content: "", embeds 
+        })
+    }
+    catch(error) {
+        throw error.message;
+    }
+
+    res.send(body)
 })
 
 app.listen(port, () => {

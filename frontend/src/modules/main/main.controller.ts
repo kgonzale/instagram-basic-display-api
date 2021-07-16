@@ -1,16 +1,9 @@
-import MainService from "./main.service"
-
 export default class MainController {
-  static $inject = ['mainService']
+  public welcomeMessage: string = "yeet";
 
-  private mainService: MainService
-  private welcomeMessage: string
-
-  constructor (mainService) {
-    this.mainService = mainService
+  constructor () {
   }
 
   $onInit () {
-    this.welcomeMessage = this.mainService.helloWorld()
   }
 }
