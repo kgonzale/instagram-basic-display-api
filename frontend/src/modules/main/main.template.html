@@ -1,5 +1,102 @@
-<form ng-submit="submit()">
-    Enter text and hit enter:
-    <input type="text" name="text" />
-    <input type="submit" id="submit" value="Submit" />
-  </form>
+<div>
+  <h1>Instagram Information</h1>
+  <div>
+    <form>
+      Enter handle: 
+      <input type="text" name="text" ng-model="handle"/>
+      <button ng-click="ctrl.getInstagramInformation(handle)">
+        Fetch 
+      </button>
+    </form>
+    <button ng-if="ctrl.instagramInformation" ng-click="ctrl.postDiscordWebhook()">
+      Save 
+    </button>
+  </div>
+</div>
+
+<div ng-if="ctrl.instagramInformation">
+  <!-- <img ng-src="{{ctrl.instagramInformation.profilePicture}}" /> -->
+  <img ng-src="https://i.imgur.com/jotjSIy.jpg" />
+  <h1>{{ctrl.instagramInformation.fullName}}</h1>
+  <h2>{{ctrl.instagramInformation.biography}}</h2>
+  <h3>{{ctrl.instagramInformation.followCount | number}} followers</h3>
+
+
+  <section class="carousel" aria-label="Gallery">
+    <ol class="carousel__viewport">
+      <li id="carousel__slide1"
+          tabindex="0"
+          class="carousel__slide">
+        <div class="carousel__snapper">
+          <a href="#carousel__slide4"
+             class="carousel__prev">Go to last slide</a>
+          <a href="#carousel__slide2"
+             class="carousel__next">Go to next slide</a>
+        </div>
+      </li>
+      <li id="carousel__slide2"
+          tabindex="0"
+          class="carousel__slide">
+        <div class="carousel__snapper"></div>
+        <a href="#carousel__slide1"
+           class="carousel__prev">Go to previous slide</a>
+        <a href="#carousel__slide3"
+           class="carousel__next">Go to next slide</a>
+      </li>
+      <li id="carousel__slide3"
+          tabindex="0"
+          class="carousel__slide">
+        <div class="carousel__snapper"></div>
+        <a href="#carousel__slide2"
+           class="carousel__prev">Go to previous slide</a>
+        <a href="#carousel__slide4"
+           class="carousel__next">Go to next slide</a>
+      </li>
+      <li id="carousel__slide4"
+          tabindex="0"
+          class="carousel__slide">
+        <div class="carousel__snapper"></div>
+        <a href="#carousel__slide3"
+           class="carousel__prev">Go to previous slide</a>
+        <a href="#carousel__slide1"
+           class="carousel__next">Go to first slide</a>
+      </li>
+    </ol>
+    <aside class="carousel__navigation">
+      <ol class="carousel__navigation-list">
+        <li class="carousel__navigation-item">
+          <a href="#carousel__slide1"
+             class="carousel__navigation-button">Go to slide 1</a>
+        </li>
+        <li class="carousel__navigation-item">
+          <a href="#carousel__slide2"
+             class="carousel__navigation-button">Go to slide 2</a>
+        </li>
+        <li class="carousel__navigation-item">
+          <a href="#carousel__slide3"
+             class="carousel__navigation-button">Go to slide 3</a>
+        </li>
+        <li class="carousel__navigation-item">
+          <a href="#carousel__slide4"
+             class="carousel__navigation-button">Go to slide 4</a>
+        </li>
+      </ol>
+    </aside>
+  </section>
+
+  <!-- <div ng-if="ctrl.instagramInformation.allPosts.length > 0">
+    <div>
+      <carousel>
+        <slide ng-repeat="slide in ctrl.instagramInformation.allPosts" >
+          <img ng-src="{{slide.displayUrl}}">
+          <div class="carousel-caption">
+            <h4>Slide {{$index+1}}</h4>
+          </div>
+        </slide>
+      </carousel>
+    </div>
+    <h4>Likes: {{ctrl.instagramInformation.likeCount.count | number}}</h4>
+    <h4>Comments: {{ctrl.instagramInformation.commentCount | number}}</h4>
+    <h4>Post Type: Carousel ({{ctrl.instagramInformation.postType}})</h4> 
+  </div> -->
+</div>

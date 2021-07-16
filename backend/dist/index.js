@@ -17,12 +17,14 @@ const express_1 = __importDefault(require("express"));
 const addisonMock_json_1 = __importDefault(require("./mock-data/addison/addisonMock.json"));
 const mockPost_json_1 = __importDefault(require("./mock-data/addison/mockPost.json"));
 const app = express_1.default();
+const cors = require('cors');
 const port = 8080;
 app.use(function (req, res, next) {
     res.setHeader('Access-Control-Allow-Origin', 'http://localhost:4200');
     res.setHeader('Access-Control-Allow-Methods', 'GET');
     next();
 });
+app.use(cors());
 app.use(express_1.default.json());
 app.get('/instagram/:handle', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { handle } = req.params;
@@ -57,9 +59,7 @@ app.get('/instagram/:handle', (req, res) => __awaiter(void 0, void 0, void 0, fu
 }));
 app.post('/discord', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { body } = req;
-    console.log(body);
     const embeds = [body];
-    console.log(embeds);
     const url = "https://discord.com/api/webhooks/865014862789738507/9zLyGEy6irx8_84gg2RuP84LlifN7yHF9TbDfh6eykz5zWzJDb2nwfriMa7h3tCVUrWZ";
     try {
         const response = yield axios_1.default.post(url, {
@@ -67,7 +67,6 @@ app.post('/discord', (req, res) => __awaiter(void 0, void 0, void 0, function* (
         });
     }
     catch (error) {
-        console.log("hit error");
         throw error.message;
     }
     res.send(body);

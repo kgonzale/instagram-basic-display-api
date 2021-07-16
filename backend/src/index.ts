@@ -5,6 +5,7 @@ import mockInstagramResponse from './mock-data/addison/addisonMock.json'
 import mockPostResponse from './mock-data/addison/mockPost.json'
 
 const app = express();
+const cors = require('cors')
 const port = 8080;
 
 app.use(function (req: Request, res: Response, next: NextFunction) {
@@ -13,6 +14,7 @@ app.use(function (req: Request, res: Response, next: NextFunction) {
     next();
 });
 
+app.use(cors())
 app.use(express.json())
 
 app.get('/instagram/:handle', async (req: Request, res: Response) => {
