@@ -18,6 +18,17 @@ Webhook could be put into some sort of user secret. Latest post date can be grab
 
 If you want to test the webhook, join the discord server here -> https://discord.gg/mnQqbSj5
 
+### Testing
+
+If you want to test mavrck data change this -> 
+- import mockInstagramResponse from './mock-data/addison/addisonMock.json'
+- import mockPostResponse from './mock-data/addison/mockPost.json'
+
+to
+
+- import mockInstagramResponse from './mock-data/mavrck/mavrckMock.json'
+- import mockPostResponse from './mock-data/mavrck/mockPost.json'
+
 ### Addison Rae imgur 
 
 - https://imgur.com/a/mA9Yz9D
