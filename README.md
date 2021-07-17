@@ -29,6 +29,8 @@ to
 - import mockInstagramResponse from './mock-data/mavrck/mavrckMock.json'
 - import mockPostResponse from './mock-data/mavrck/mockPost.json'
 
+There is a proxies branch, that was my attempt at implementing proxies with this project.
+
 ### Addison Rae imgur 
 
 - https://imgur.com/a/mA9Yz9D
