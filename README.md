@@ -12,7 +12,11 @@ CSS can definitely be improved. Right now it's plain.
 
 Trying to cache mock data is tough to do, my approach would be to cache on the rest api layer, then send a 304 back to the client if the data they are trying to fetch is cached.
 
-Latest post date can be grabbed by using regex, unfortunately I ran over 2 hours on this project. 
+Webhook could be put into some sort of user secret. Latest post date can be grabbed by using regex, unfortunately I ran over 2 hours on this project. 
+
+### Webhook
+
+If you want to test the webhook, join the discord server here -> https://discord.gg/mnQqbSj5
 
 ### Addison Rae imgur 
 
