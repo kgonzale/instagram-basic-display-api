@@ -1,10 +1,10 @@
-### Design
+# Design
 
 Basically top down, my aim was to go for a card, user input does not work as I could not get the instagram api working, therefore we have mock data
 
 A carousel was planned but it took too long to figure out how to create a CSS carousel, and I couldn't find good documentation on module $injects.
 
-### Problems and Future enhancements
+# Problems and Future enhancements
 
 Work on the what information we are passing into discord. Have a script to read through all messages and save it into an excel spreadsheet, or whatever type of format to help with the scraping of information. 
 
@@ -14,11 +14,11 @@ Trying to cache mock data is tough to do, my approach would be to cache on the r
 
 Webhook could be put into some sort of user secret. Typescript can be better handled, since I don't have the graphql schema and how it changes, I decided not to go forward, hence you will see some :any or as any assertions.
 
-### Webhook
+# Webhook
 
 If you want to test the webhook, join the discord server here -> https://discord.gg/mnQqbSj5
 
-### Testing
+# Testing
 
 If you want to test mavrck data change this -> 
 - import mockInstagramResponse from './mock-data/addison/addisonMock.json'
