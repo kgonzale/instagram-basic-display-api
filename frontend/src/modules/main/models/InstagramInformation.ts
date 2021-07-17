@@ -1,3 +1,5 @@
+import { AllPosts } from "./AllPosts";
+
 export interface InstagramInformation {
     profilePicture: string
     biography: string
@@ -6,6 +8,6 @@ export interface InstagramInformation {
     likeCount: number
     commentCount: number
     latestPostCaption: string
-    postType: any
-    allPosts: any
+    postType: string
+    allPosts: AllPosts | string
 }

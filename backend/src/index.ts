@@ -31,10 +31,16 @@ app.get('/instagram/:handle', async (req: Request, res: Response) => {
     // const postInformationUrl = `https://www.instagram.com/p/${postId}/?__a=1`
     // const postInformation = await axios.get(postInformationUrl);
 
-    const postInformation = mockPostResponse.graphql.shortcode_media;
+    const postInformation = mockPostResponse.graphql.shortcode_media as any;
     const postType = postInformation.__typename;
 
-    const posts = (postType === "GraphSidecar") ? postInformation.edge_sidecar_to_children.edges.map(item => {
+
+    // const latestPostDate = (postInformation.edge_sidecar_to_children.edges[1].node.accessibility_caption) ? 
+    //     postInformation.edge_sidecar_to_children.edges[1].node.accessibility_caption
+    //     : postInformation.display_url;
+
+
+    const posts = (postType === "GraphSidecar") ? postInformation.edge_sidecar_to_children.edges.map((item: any) => {
         return {
             displayUrl: item.node.display_url,
             type: item.node.__typename
@@ -53,6 +59,8 @@ app.get('/instagram/:handle', async (req: Request, res: Response) => {
         allPosts: posts
     }
 
+    console.log(userInformation)
+
     res.send(userInformation);
 })
 
@@ -60,6 +68,7 @@ app.get('/instagram/:handle', async (req: Request, res: Response) => {
 
 app.post('/discord', async (req: Request, res: Response) => {
     const { body } = req;  
+
     const embeds = [body]
 
     const url = "https://discord.com/api/webhooks/865014862789738507/9zLyGEy6irx8_84gg2RuP84LlifN7yHF9TbDfh6eykz5zWzJDb2nwfriMa7h3tCVUrWZ"  
@@ -73,7 +82,7 @@ app.post('/discord', async (req: Request, res: Response) => {
         throw error.message;
     }
 
-    res.send(body)
+    res.send(body.fullName)
 })
 
 app.listen(port, () => {

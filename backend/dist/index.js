@@ -38,7 +38,10 @@ app.get('/instagram/:handle', (req, res) => __awaiter(void 0, void 0, void 0, fu
     // const postInformation = await axios.get(postInformationUrl);
     const postInformation = mockPost_json_1.default.graphql.shortcode_media;
     const postType = postInformation.__typename;
-    const posts = (postType === "GraphSidecar") ? postInformation.edge_sidecar_to_children.edges.map(item => {
+    // const latestPostDate = (postInformation.edge_sidecar_to_children.edges[1].node.accessibility_caption) ? 
+    //     postInformation.edge_sidecar_to_children.edges[1].node.accessibility_caption
+    //     : postInformation.display_url;
+    const posts = (postType === "GraphSidecar") ? postInformation.edge_sidecar_to_children.edges.map((item) => {
         return {
             displayUrl: item.node.display_url,
             type: item.node.__typename
@@ -55,6 +58,7 @@ app.get('/instagram/:handle', (req, res) => __awaiter(void 0, void 0, void 0, fu
         postType: postType,
         allPosts: posts
     };
+    console.log(userInformation);
     res.send(userInformation);
 }));
 app.post('/discord', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -69,7 +73,7 @@ app.post('/discord', (req, res) => __awaiter(void 0, void 0, void 0, function* (
     catch (error) {
         throw error.message;
     }
-    res.send(body);
+    res.send(body.fullName);
 }));
 app.listen(port, () => {
     console.log(`server started at http://localhost:${port}`);

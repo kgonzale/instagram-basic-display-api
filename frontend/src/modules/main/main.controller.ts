@@ -7,19 +7,24 @@ export default class MainController {
   handle: string;
   instagramInformation: InstagramInformation;
   mockedImages = [{
-          "displayUrl": "https://i.imgur.com/ep9b0Ro.jpeg"
+          "displayUrl": "https://i.imgur.com/ep9b0Ro.jpeg",
+          "id" : "carousel__slide1"
       },
       {
-          "displayUrl": "https://i.imgur.com/EKMoucO.jpeg"
+          "displayUrl": "https://i.imgur.com/EKMoucO.jpeg",
+          "id" : "carousel__slide2"
       },
       {
-          "displayUrl": "https://i.imgur.com/Zk3KKUW.jpeg"
+          "displayUrl": "https://i.imgur.com/Zk3KKUW.jpeg",
+          "id" : "carousel__slide3"
       },
       {
           "displayUrl": "https://i.imgur.com/Afg43nh.jpeg"
+          ,"id" : "carousel__slide4"
       },
       {
-          "displayUrl": "https://i.imgur.com/7tNR1Or.jpeg"
+          "displayUrl": "https://i.imgur.com/7tNR1Or.jpeg",
+          "id" : "carousel__slide5"
       }
   ]
 
@@ -36,6 +41,14 @@ export default class MainController {
   }
 
   postDiscordWebhook(): void {
-      console.log(this.instagramInformation)
+      const embed = { 
+        title: this.instagramInformation.fullName,
+        description: `bio: ${this.instagramInformation.biography}, followers: ${this.instagramInformation.followCount}`,
+        thumbnail: { url: `${this.instagramInformation.profilePicture}` }
+      }
+
+      this.httpService.post(`http://localhost:8080/discord`, embed).then((response) => {
+        alert("Successful!")
+    })
   }
 }
