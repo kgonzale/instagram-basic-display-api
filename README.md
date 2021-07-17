@@ -1,6 +1,31 @@
+# Testing
+
+If you want to test mavrck data change this -> 
+- import mockInstagramResponse from './mock-data/addison/addisonMock.json'
+- import mockPostResponse from './mock-data/addison/mockPost.json'
+
+to
+
+- import mockInstagramResponse from './mock-data/mavrck/mavrckMock.json'
+- import mockPostResponse from './mock-data/mavrck/mockPost.json'
+
+There is a proxies branch, that was my attempt at implementing proxies with this project.
+
+## Backend
+
+1. Run `npm install` to install application dependencies.
+2. Run `npm run build-and-start` to transpile TypeScript into JavaScript and run the application.
+
+## Frontend
+
+1. Run `npm install` to install application dependencies.
+2. Run `npm run start` to run the application.
+
+
+
 # Design
 
-Basically top down, my aim was to go for a card, user input does not work as I could not get the instagram api working, therefore we have mock data
+Basically top down, my aim was to go for a card, user input does not work as I could not get the instagram api working, therefore we have mock data. Hit fetch with any form of input and it retrieves the data from the current json import in the backend.
 
 A carousel was planned but it took too long to figure out how to create a CSS carousel, and I couldn't find good documentation on module $injects.
 
@@ -17,19 +42,6 @@ Webhook could be put into some sort of user secret. Typescript can be better han
 # Webhook
 
 If you want to test the webhook, join the discord server here -> https://discord.gg/mnQqbSj5
-
-# Testing
-
-If you want to test mavrck data change this -> 
-- import mockInstagramResponse from './mock-data/addison/addisonMock.json'
-- import mockPostResponse from './mock-data/addison/mockPost.json'
-
-to
-
-- import mockInstagramResponse from './mock-data/mavrck/mavrckMock.json'
-- import mockPostResponse from './mock-data/mavrck/mockPost.json'
-
-There is a proxies branch, that was my attempt at implementing proxies with this project.
 
 ### Addison Rae imgur 
 
