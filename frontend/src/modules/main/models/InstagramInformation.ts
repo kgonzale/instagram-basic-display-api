@@ -9,5 +9,6 @@ export interface InstagramInformation {
     commentCount: number
     latestPostCaption: string
     postType: string
-    allPosts: AllPosts | string
+    allPosts: AllPosts | string,
+    latestPostDate: number
 }

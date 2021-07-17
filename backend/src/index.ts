@@ -35,10 +35,13 @@ app.get('/instagram/:handle', async (req: Request, res: Response) => {
     const postType = postInformation.__typename;
 
 
-    // const latestPostDate = (postInformation.edge_sidecar_to_children.edges[1].node.accessibility_caption) ? 
-    //     postInformation.edge_sidecar_to_children.edges[1].node.accessibility_caption
-    //     : postInformation.display_url;
+    const accessibilityCaption = (postType === "GraphSidecar") ? 
+        postInformation.edge_sidecar_to_children.edges[1].node.accessibility_caption
+        : postInformation.accessibility_caption;
 
+    const grabDateRegex = /(Jan(uary)?|Feb(ruary)?|Mar(ch)?|Apr(il)?|May|Jun(e)?|Jul(y)?|Aug(ust)?|Sep(tember)?|Oct(ober)?|Nov(ember)?|Dec(ember)?)\s+\d{1,2},\s+\d{4}/g
+
+    const latestPostDate = accessibilityCaption.match(grabDateRegex)
 
     const posts = (postType === "GraphSidecar") ? postInformation.edge_sidecar_to_children.edges.map((item: any) => {
         return {
@@ -56,7 +59,8 @@ app.get('/instagram/:handle', async (req: Request, res: Response) => {
         commentCount: postInformation.edge_media_to_parent_comment.count,
         latestPostCaption: postInformation.edge_media_to_caption.edges[0].node,
         postType: postType,
-        allPosts: posts
+        allPosts: posts,
+        latestPostDate: latestPostDate[0]
     }
 
     console.log(userInformation)

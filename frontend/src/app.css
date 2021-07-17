@@ -27,3 +27,8 @@ html body{
   content: "|";
   padding-right: 0.3em;
 }
+
+
+img {
+  border-radius: 50%;
+}

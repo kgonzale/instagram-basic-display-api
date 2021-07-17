@@ -38,9 +38,11 @@ app.get('/instagram/:handle', (req, res) => __awaiter(void 0, void 0, void 0, fu
     // const postInformation = await axios.get(postInformationUrl);
     const postInformation = mockPost_json_1.default.graphql.shortcode_media;
     const postType = postInformation.__typename;
-    // const latestPostDate = (postInformation.edge_sidecar_to_children.edges[1].node.accessibility_caption) ? 
-    //     postInformation.edge_sidecar_to_children.edges[1].node.accessibility_caption
-    //     : postInformation.display_url;
+    const accessibilityCaption = (postType === "GraphSidecar") ?
+        postInformation.edge_sidecar_to_children.edges[1].node.accessibility_caption
+        : postInformation.accessibility_caption;
+    const grabDateRegex = /(Jan(uary)?|Feb(ruary)?|Mar(ch)?|Apr(il)?|May|Jun(e)?|Jul(y)?|Aug(ust)?|Sep(tember)?|Oct(ober)?|Nov(ember)?|Dec(ember)?)\s+\d{1,2},\s+\d{4}/g;
+    const latestPostDate = accessibilityCaption.match(grabDateRegex);
     const posts = (postType === "GraphSidecar") ? postInformation.edge_sidecar_to_children.edges.map((item) => {
         return {
             displayUrl: item.node.display_url,
@@ -56,7 +58,8 @@ app.get('/instagram/:handle', (req, res) => __awaiter(void 0, void 0, void 0, fu
         commentCount: postInformation.edge_media_to_parent_comment.count,
         latestPostCaption: postInformation.edge_media_to_caption.edges[0].node,
         postType: postType,
-        allPosts: posts
+        allPosts: posts,
+        latestPostDate: latestPostDate[0]
     };
     console.log(userInformation);
     res.send(userInformation);
