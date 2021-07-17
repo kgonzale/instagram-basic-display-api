@@ -14,6 +14,7 @@ app.use(function (req: Request, res: Response, next: NextFunction) {
     next();
 });
 
+/* allow all headers */
 app.use(cors())
 app.use(express.json())
 
@@ -63,8 +64,6 @@ app.get('/instagram/:handle', async (req: Request, res: Response) => {
         latestPostDate: latestPostDate[0]
     }
 
-    console.log(userInformation)
-
     res.send(userInformation);
 })
 
@@ -75,7 +74,7 @@ app.post('/discord', async (req: Request, res: Response) => {
 
     const embeds = [body]
 
-    const url = "https://discord.com/api/webhooks/865014862789738507/9zLyGEy6irx8_84gg2RuP84LlifN7yHF9TbDfh6eykz5zWzJDb2nwfriMa7h3tCVUrWZ"  
+    const url = process.env.DISCORD_WEBHOOK;  
 
     try { 
         const response = await axios.post(url, { 
