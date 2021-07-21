@@ -27,4 +27,6 @@ CSS can definitely be improved. Right now it's plain.
 
 Trying to cache mock data is tough to do, my approach would be to cache on the rest api layer, then send a 304 back to the client if the data they are trying to fetch is cached.
 
-Webhook could be put into some sort of user secret. Typescript can be better handled, since I don't have the graphql schema and how it changes, I decided not to go forward, hence you will see some :any or as any assertions.
+Typescript can be better handled, since I don't have the graphql schema and how it changes, I decided not to go forward, hence you will see some :any or as any assertions.
+
+Switch to a more modern stack like React + Express (MERN)
