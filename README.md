@@ -1,10 +1,5 @@
-# Testing
-
-If you want to test mavrck data change this -> 
-- import mockInstagramResponse from './mock-data/addison/addisonMock.json'
-- import mockPostResponse from './mock-data/addison/mockPost.json'
-
-There is a proxies branch, that was my attempt at implementing proxies with this project.
+# Stack
+This project uses Angular.js and Express.js.
 
 ## Backend
 
@@ -33,9 +28,3 @@ CSS can definitely be improved. Right now it's plain.
 Trying to cache mock data is tough to do, my approach would be to cache on the rest api layer, then send a 304 back to the client if the data they are trying to fetch is cached.
 
 Webhook could be put into some sort of user secret. Typescript can be better handled, since I don't have the graphql schema and how it changes, I decided not to go forward, hence you will see some :any or as any assertions.
-
-### Addison Rae imgur 
-
-- https://imgur.com/a/mA9Yz9D
-
-- https://imgur.com/a/8J0odCu
