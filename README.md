@@ -29,4 +29,4 @@ Trying to cache mock data is tough to do, my approach would be to cache on the r
 
 Typescript can be better handled, since I don't have the graphql schema and how it changes, I decided not to go forward, hence you will see some :any or as any assertions.
 
-Switch to a more modern stack like React + Express (MERN)
+Switch to a more modern stack like **React + Express (MERN)**
